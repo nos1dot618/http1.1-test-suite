@@ -12,3 +12,8 @@ def contains(needle, haystack, message, response=None):
 def equals(expected, actual, message, response=None):
     if actual != expected:
         raise TestFailure(message, response=response)
+
+
+def equalsAny(expectedValues, actual, message, response=None):
+    if all(actual != expected for expected in expectedValues):
+        raise TestFailure(message, response=response)

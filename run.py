@@ -1,10 +1,12 @@
 import importlib
 import os
+from utils import tags
 from utils.asserts import TestFailure
 from termcolor import colored
 
 TEST_DIR = "tests/"
 URL = "http://localhost:8080/README.md"
+STRICT_MODE = False
 
 
 def log(level, color, message):
@@ -24,6 +26,14 @@ def runTests():
         for attr in dir(module):
             if attr.startswith("test"):
                 testFunction = getattr(module, attr)
+                if (
+                    hasattr(testFunction, "_tags") and
+                    tags.TAG_STRICT in testFunction._tags and
+                    not STRICT_MODE
+                ):
+                    log("SKIP", "blue", attr)
+                    continue
+
                 try:
                     testFunction(URL)
                     log("PASS", "green", attr)

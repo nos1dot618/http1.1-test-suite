@@ -9,6 +9,8 @@ pip install -r requirements.txt
 python3 run.py # Edit run.py to configure host and port.
 ```
 
+> For stricter testing: set `STRICT_MODE` to `True` inside [run.py](run.py).
+
 ## About
 
 This project is not a full-fledged test suite or a complete HTTP/1.1

@@ -31,3 +31,22 @@ def testGetRoot(url):
         "Missing header-body seperator",
         response
     )
+
+
+def testNotFound(url):
+    url += "/let/there/be/light"
+    response = curl.request(url)
+
+    asserts.equals(
+        404,
+        response.code,
+        "Expected 404 Not Found",
+        response
+    )
+
+    asserts.equals(
+        b"Not Found",
+        response.codeString,
+        "Expected 200 Not Found",
+        response
+    )
