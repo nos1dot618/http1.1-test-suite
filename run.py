@@ -25,7 +25,7 @@ def runTests():
 
                     if e.response:
                         print("#### Response ####")
-                        print(e.response.decode(errors="replace"))
+                        print(e.response.text())
                         print("##################")
 
 

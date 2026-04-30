@@ -7,3 +7,8 @@ class TestFailure(AssertionError):
 def contains(needle, haystack, message, response=None):
     if needle not in haystack:
         raise TestFailure(message, response=response)
+
+
+def equals(expected, actual, message, response=None):
+    if actual != expected:
+        raise TestFailure(message, response=response)
