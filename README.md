@@ -18,3 +18,8 @@ conformance tool (yet). Its current purpose is to support and validate
 development of my HTTP server: <https://gitlab.com/ninthcircle/outpost>.
 The long-term goal is to evolve this into a more comprehensive testing tool,
 but for now it is focused on practical testing needs for `outpost-http-server`.
+
+## References
+
+* <https://www.rfc-editor.org/rfc/rfc7230.html>
+* <https://www.rfc-editor.org/rfc/rfc9110.html>
