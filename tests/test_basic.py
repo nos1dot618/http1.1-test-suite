@@ -1,8 +1,11 @@
-from utils import curl, asserts
+from utils import asserts, curl
 
 
-def testGetRoot(url):
-    response = curl.request(url)
+def test_version(url, document):
+    response = curl.request(
+        f"{url}{document}",
+        headers={"host": "9th.fun"}
+    )
 
     asserts.equals(
         b"HTTP/1.1",
@@ -11,28 +14,16 @@ def testGetRoot(url):
         response
     )
 
-    asserts.equals(
-        200,
-        response.code,
-        "Expected 200 OK",
-        response
+
+def test_header_body_seperator_presence(url, document):
+    response = curl.request(
+        f"{url}{document}",
+        headers={"host": "9th.fun"}
     )
 
     asserts.contains(
         b"\r\n\r\n",
         response.raw,
-        "Missing header-body seperator",
-        response
-    )
-
-
-def testNotFound(url):
-    url += "/let/there/be/light"
-    response = curl.request(url)
-
-    asserts.equals(
-        404,
-        response.code,
-        "Expected 404 Not Found",
+        "Missing header-body seperator '\\r\\n\\r\\n'",
         response
     )

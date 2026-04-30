@@ -2,7 +2,7 @@ from utils import asserts, curl, tags
 
 
 @tags.tag(tags.TAG_STRICT)
-def testInvalidMethod(url):
+def test_invalid_method(url, document):
     """
     The HTTP/1.1 specification allows the TRACE method, but it is commonly
     disabled in production environments due to security risks (e.g., request
@@ -12,7 +12,11 @@ def testInvalidMethod(url):
     (Not Implemented).
     """
 
-    response = curl.request(url, method="TRACE")
+    response = curl.request(
+        f"{url}{document}",
+        method="TRACE",
+        headers={"host": "9th.fun"}
+    )
 
     asserts.equalsAny(
         [405, 501],

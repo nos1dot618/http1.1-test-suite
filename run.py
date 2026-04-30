@@ -5,7 +5,10 @@ from utils.asserts import TestFailure
 from termcolor import colored
 
 TEST_DIR = "tests/"
-URL = "http://localhost:8080/README.md"
+# Must not end with '/'.
+URL = "http://localhost:8080"
+# Must start with '/'.
+DOCUMENT = "/README.md"
 STRICT_MODE = False
 
 
@@ -14,7 +17,7 @@ def log(level, color, message):
 
 
 def runTests():
-    passCount, failCount = 0, 0
+    passCount, failCount, skipCount = 0, 0, 0
 
     for file in os.listdir(TEST_DIR):
         if not (file.startswith("test_") and file.endswith(".py")):
@@ -24,7 +27,7 @@ def runTests():
         module = importlib.import_module(moduleName)
 
         for attr in dir(module):
-            if attr.startswith("test"):
+            if attr.startswith("test_"):
                 testFunction = getattr(module, attr)
                 if (
                     hasattr(testFunction, "_tags") and
@@ -32,10 +35,11 @@ def runTests():
                     not STRICT_MODE
                 ):
                     log("SKIP", "blue", attr)
+                    skipCount += 1
                     continue
 
                 try:
-                    testFunction(URL)
+                    testFunction(URL, DOCUMENT)
                     log("PASS", "green", attr)
                     passCount += 1
                 except TestFailure as e:
@@ -44,10 +48,12 @@ def runTests():
                         print(colored(e.response, color="yellow"))
                         failCount += 1
 
+    totalCount = passCount + failCount + skipCount
     print("=====================================================")
-    log("INFO", "blue", f"Tests Passed : {passCount}")
-    log("INFO", "blue", f"Tests Failed : {failCount}")
-    log("INFO", "blue", f"Total Tests  : {passCount + failCount}")
+    log("INFO", "blue", f"Tests Passed  : {passCount}")
+    log("INFO", "blue", f"Tests Failed  : {failCount}")
+    log("INFO", "blue", f"Tests Skipped : {skipCount}")
+    log("INFO", "blue", f"Total Tests   : {totalCount}")
 
 
 if __name__ == "__main__":
