@@ -18,16 +18,20 @@ class Response:
         self.headers = {}
         for line in lines[1:]:
             key, value = line.split(b":")
-            self.headers[key.strip()] = value.strip()
+            self.headers[key.strip().lower()] = value.strip()
 
     def text(self):
         return self.raw.decode(errors="replace")
 
     def __str__(self):
-        return f"Version: {self.version}\n" + \
-            f"Code: {self.code}\n" + \
-            f"Code String: {self.codeString}\n" + \
-            f"========\n{self.text()}"
+        return f"Version: {self.version.decode(errors='replace')}\n" + \
+            f"Code: {self.code} " + \
+            self.codeString.decode(errors='replace') + \
+            "\nHeaders:\n" + \
+            "\n".join(f"* {key.decode(errors='replace')}: " +
+                      f"{value.decode(errors='replace')}" for key, value
+                      in self.headers.items()) + \
+            "\nBody: ... <truncated>"
 
 
 def request(url,

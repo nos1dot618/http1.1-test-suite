@@ -1,16 +1,12 @@
-## Getting Started
+![Thumbnail](resources/Thumbnail.png)
 
-Create a virtual environment and install dependencies, 
-**only if** you want to take part in the development.
+## Getting Started
 
 ```bash
 python3 -m venv venv
 source ./venv/bin/activate
 pip install -r requirements.txt
-```
-
-```bash
-python3 run.py
+python3 run.py # Edit run.py to configure host and port.
 ```
 
 ## About
