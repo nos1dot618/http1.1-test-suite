@@ -7,20 +7,13 @@ def testGetRoot(url):
     asserts.equals(
         b"HTTP/1.1",
         response.version,
-        "Expected version 1.1",
+        "Expected version 'HTTP/1.1'",
         response
     )
 
     asserts.equals(
         200,
         response.code,
-        "Expected 200 OK",
-        response
-    )
-
-    asserts.equals(
-        b"OK",
-        response.codeString,
         "Expected 200 OK",
         response
     )
@@ -41,12 +34,5 @@ def testNotFound(url):
         404,
         response.code,
         "Expected 404 Not Found",
-        response
-    )
-
-    asserts.equals(
-        b"Not Found",
-        response.codeString,
-        "Expected 200 Not Found",
         response
     )

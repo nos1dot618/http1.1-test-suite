@@ -17,7 +17,7 @@ class Response:
 
         self.headers = {}
         for line in lines[1:]:
-            key, value = line.split(b":")
+            key, value = line.split(b":", 1)
             self.headers[key.strip().lower()] = value.strip()
 
     def text(self):
